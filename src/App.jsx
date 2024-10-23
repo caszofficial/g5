@@ -5,6 +5,7 @@ function App() {
   const [numerosYaGenerados, setNumerosYaGenerados] = useState(new Set()); // Usamos Set para mayor eficiencia
   const [numerosRecientes, setNumerosRecientes] = useState([]); // Números generados en la última ejecución
   const totalNumerosPosibles = 100000; // Total de números posibles (00000 a 99999)
+  const [cantidad, setCantidad] = useState(0);
 
   // Creamos un arreglo de todos los números posibles desde '00000' a '99999'
   const [todosLosNumeros, setTodosLosNumeros] = useState([]);
@@ -60,8 +61,15 @@ function App() {
     <>
       <p>Total de números generados: {numerosYaGenerados.size}</p>
       <h1>Generador de Números de Lotería</h1>
-      <button onClick={() => generarNumerosLoteria(100000)}>
-        Generar 5000 Números
+      <input
+        type="text"
+        onChange={(e) => setCantidad(e.target.value)}
+        value={cantidad}
+        min="1"
+        max={totalNumerosPosibles - numerosYaGenerados.size}
+      />
+      <button onClick={() => generarNumerosLoteria(cantidad)}>
+        Generar {cantidad} Números
       </button>
 
       {/* Mostrar los números generados en esta ejecución */}
