@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { collection, addDoc, getDocs } from 'firebase/firestore'
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import firebase from "./firebase/firebase";
 
 // import Get from "./firebase/Get";
@@ -11,10 +11,10 @@ function App() {
   const [numerosRecientes, setNumerosRecientes] = useState([]); // Números generados en la última ejecución
   const totalNumerosPosibles = 100000; // Total de números posibles (00000 a 99999)
   const [cantidad, setCantidad] = useState(0);
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   // const numeros = collection(firebase, "numerosGenerados")
 
@@ -79,29 +79,74 @@ function App() {
     setNumerosYaGenerados(new Set(numerosYaGenerados)); // Actualizar el Set
   };
 
-  const datos = collection(firebase, "ventas")
+  const datos = collection(firebase, "ventas");
+  const numeros = collection(firebase, "numerosGenerados");
+
+  const updateNumbers = async () => {
+    const data = await getDocs(datos);
+    const numbers = data.docs.map((m) => m.data());
+    const flat = numbers.map((d) => d.numbers).flat();
+    return flat;
+  };
+  const getNumbers = async () => {
+    const data = await getDocs(numeros);
+    const numbers = data.docs.map((m) => m.data());
+    console.log(numbers.map((n) => n));
+    // setDatos(data.docs.map(doc => ({ ...doc.data()})))
+
+    // console.log(numerosYaGenerados);
+  };
+
+  useEffect(() => {
+    updateNumbers();
+    getNumbers();
+  }, []);
 
   const createData = async (e) => {
-    e.preventDefault()
-    await addDoc(datos, { name: name, email: email, phone: phone, address: address, numbers: numerosRecientes })
-
-  }
+    e.preventDefault();
+    await addDoc(datos, {
+      name: name,
+      email: email,
+      phone: phone,
+      address: address,
+      numbers: numerosRecientes,
+    });
+  };
 
   // const removeNumbers = async () => {
-  //   
+  //
   //   await addDoc(numeros, {...numerosYaGenerados, numerosRecientes})
   // }
-
 
   return (
     <>
       <form onSubmit={createData}>
         <p>Total de números generados: {numerosYaGenerados.size}</p>
         <h1>Generador de Números de Lotería</h1>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Nombre' />
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Correo Electronico' />
-        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder='Numero de Telefono' />
-        <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Direccion' />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nombre"
+        />
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Correo Electronico"
+        />
+        <input
+          type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Numero de Telefono"
+        />
+        <input
+          type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Direccion"
+        />
         <input
           type="text"
           onChange={(e) => setCantidad(e.target.value)}
@@ -109,7 +154,7 @@ function App() {
           min="1"
           max={totalNumerosPosibles - numerosYaGenerados.size}
         />
-        <button type="submit" onClick={()=>generarNumerosLoteria(cantidad)}>
+        <button type="submit" onClick={() => generarNumerosLoteria(cantidad)}>
           Generar {cantidad} Números
         </button>
       </form>
