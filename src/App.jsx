@@ -3,9 +3,6 @@ import "./App.css";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import firebase from "./firebase/firebase";
 
-// import Get from "./firebase/Get";
-// import Create from "./firebase/Create";
-
 function App() {
   const [numerosYaGenerados, setNumerosYaGenerados] = useState(new Set()); // Usamos Set para mayor eficiencia
   const [numerosRecientes, setNumerosRecientes] = useState([]); // Números generados en la última ejecución
@@ -16,24 +13,15 @@ function App() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
-  // const numeros = collection(firebase, "numerosGenerados")
+  // Referencia a la colección de Firebase
+  const datos = collection(firebase, "ventas");
+  const numeros = collection(firebase, "numerosGenerados");
 
-  // const getNumbers = async () => {
-  //   const data = await getDocs(numeros)
-  //   setNumerosYaGenerados([...data.docs.map(doc => ({ ...doc.data() })), numerosRecientes])
-  //   // setDatos(data.docs.map(doc => ({ ...doc.data()})))
-
-  //   console.log(numerosYaGenerados)
-  // }
-  // useEffect(() => {
-  //   getNumbers()
-  // }, [])
-
-  // Creamos un arreglo de todos los números posibles desde '00000' a '99999'
+  // Inicializa todos los números posibles al cargar el componente
   const [todosLosNumeros, setTodosLosNumeros] = useState([]);
 
   useEffect(() => {
-    // Inicializa todos los números posibles al cargar el componente (solo una vez)
+    // Generar todos los números posibles desde '00000' a '99999'
     const generarTodosLosNumeros = () => {
       const numeros = [];
       for (let i = 0; i < totalNumerosPosibles; i++) {
@@ -43,18 +31,17 @@ function App() {
     };
 
     generarTodosLosNumeros();
+    getNumbers(); // Cargar números existentes de Firebase al inicio
   }, []);
 
-  // Mezcla el arreglo de números posibles (Fisher-Yates Shuffle)
-  const mezclarNumeros = (arr) => {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+  // Función para recuperar números ya generados desde Firebase
+  const getNumbers = async () => {
+    const data = await getDocs(numeros); // Recuperar documentos de 'numerosGenerados'
+    const allNumbers = data.docs.flatMap((doc) => doc.data().numeros || []); // Obtener todos los arreglos 'numeros' de cada documento
+    setNumerosYaGenerados(new Set(allNumbers)); // Actualizar el estado con todos los números únicos
   };
 
-  // Función para generar una cantidad específica de números
+  // Función para generar números de lotería
   const generarNumerosLoteria = (cantidad) => {
     if (numerosYaGenerados.size >= totalNumerosPosibles) {
       alert("Todos los números posibles ya han sido generados.");
@@ -79,44 +66,35 @@ function App() {
     setNumerosYaGenerados(new Set(numerosYaGenerados)); // Actualizar el Set
   };
 
-  const datos = collection(firebase, "ventas");
-  const numeros = collection(firebase, "numerosGenerados");
-
-  const updateNumbers = async () => {
-    const data = await getDocs(datos);
-    const numbers = data.docs.map((m) => m.data());
-    const flat = numbers.map((d) => d.numbers).flat();
-    return flat;
-  };
-  const getNumbers = async () => {
-    const data = await getDocs(numeros);
-    const numbers = data.docs.map((m) => m.data());
-    console.log(numbers.map((n) => n));
-    // setDatos(data.docs.map(doc => ({ ...doc.data()})))
-
-    // console.log(numerosYaGenerados);
+  // Función para mezclar un arreglo (Fisher-Yates Shuffle)
+  const mezclarNumeros = (arr) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
   };
 
-  useEffect(() => {
-    updateNumbers();
-    getNumbers();
-  }, []);
-
+  // Crear datos en la colección 'ventas' y actualizar números en 'numerosGenerados'
   const createData = async (e) => {
     e.preventDefault();
+
+    // Crear documento en la colección 'ventas'
     await addDoc(datos, {
       name: name,
       email: email,
       phone: phone,
       address: address,
-      numbers: numerosRecientes,
+      numbers: numerosRecientes, // Guardar los números generados recientes
     });
-  };
 
-  // const removeNumbers = async () => {
-  //
-  //   await addDoc(numeros, {...numerosYaGenerados, numerosRecientes})
-  // }
+    // Actualizar los números en 'numerosGenerados'
+    const docRef = collection(firebase, "numerosGenerados"); // Referencia a la colección
+    await addDoc(docRef, { numeros: numerosRecientes }); // Guardar nuevos números generados
+    setNumerosYaGenerados(
+      new Set([...numerosYaGenerados, ...numerosRecientes])
+    ); // Actualizar el estado
+  };
 
   return (
     <>
@@ -148,11 +126,11 @@ function App() {
           placeholder="Direccion"
         />
         <input
-          type="text"
-          onChange={(e) => setCantidad(e.target.value)}
-          value={cantidad}
-          min="1"
+          type="number"
+          onChange={(e) => setCantidad(Number(e.target.value))}
+          value={cantidad || ""}
           max={totalNumerosPosibles - numerosYaGenerados.size}
+          placeholder="Cantidad de Números a Generar"
         />
         <button type="submit" onClick={() => generarNumerosLoteria(cantidad)}>
           Generar {cantidad} Números
@@ -160,8 +138,6 @@ function App() {
       </form>
       {/* Mostrar los números generados en esta ejecución */}
       {numerosRecientes.length > 0 && <p>{numerosRecientes.join(" - ")}</p>}
-
-      {/* Mostrar el total de números generados hasta el momento */}
     </>
   );
 }
