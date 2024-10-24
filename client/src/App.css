@@ -1,6 +1,27 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header {
   text-align: center;
+  padding: 20px;
+  background-color: red;
+}
+
+.content {
+  text-align: center;
+  padding: 20px;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: green;
 }

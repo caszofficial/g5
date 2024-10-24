@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import firebase from "./firebase/firebase";
+import Content from "./components/Content";
 
 function App() {
   const [numerosYaGenerados, setNumerosYaGenerados] = useState(new Set()); // Usamos Set para mayor eficiencia
@@ -97,11 +98,14 @@ function App() {
   };
 
   return (
-    <>
-      <form onSubmit={createData}>
-        <p>Total de números generados: {numerosYaGenerados.size}</p>
-        <h1>Generador de Números de Lotería</h1>
-        {/* <input
+    <div className="page">
+      <header className="header">HEADER</header>
+      <main className="content">
+        <Content/>
+        {/* <form onSubmit={createData}>
+          <p>Total de números generados: {numerosYaGenerados.size}</p>
+          <h1>Generador de Números de Lotería</h1> */}
+          {/* <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -125,20 +129,22 @@ function App() {
           onChange={(e) => setAddress(e.target.value)}
           placeholder="Direccion"
         /> */}
-        <input
-          type="number"
-          onChange={(e) => setCantidad(Number(e.target.value))}
-          value={cantidad || ""}
-          max={totalNumerosPosibles - numerosYaGenerados.size}
-          placeholder="Cantidad de Números a Generar"
-        />
-        <button type="submit" onClick={() => generarNumerosLoteria(cantidad)}>
-          Generar {cantidad} Números
-        </button>
-      </form>
-      {/* Mostrar los números generados en esta ejecución */}
-      {numerosRecientes.length > 0 && <p>{numerosRecientes.join(" - ")}</p>}
-    </>
+          {/* <input
+            type="number"
+            onChange={(e) => setCantidad(Number(e.target.value))}
+            value={cantidad || ""}
+            max={totalNumerosPosibles - numerosYaGenerados.size}
+            placeholder="Cantidad de Números a Generar"
+          />
+          <button type="submit" onClick={() => generarNumerosLoteria(cantidad)}>
+            Generar {cantidad} Números
+          </button>
+        </form> */}
+        {/* Mostrar los números generados en esta ejecución */}
+        {/* {numerosRecientes.length > 0 && <p>{numerosRecientes.join(" - ")}</p>} */}
+      </main>
+      <footer className="footer">footer</footer>
+    </div>
   );
 }
 
