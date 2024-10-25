@@ -3,9 +3,14 @@ import React from "react";
 const Content = () => {
   return (
     <div>
-      <h1>Titulo Sorteo</h1>
+      <h1>Ganate un Mercedez A200 0km</h1>
       <div style={{ marginBottom: "20px" }}>
-        <img src="iamgen sorteo" alt="" height="300px" width="80%" />
+        <img
+          src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
+          alt=""
+          height="300px"
+          width="100%"
+        />
       </div>
       <div
         style={{
@@ -21,7 +26,7 @@ const Content = () => {
             color: "white",
             padding: "5px",
             borderRadius: "5px",
-            fontSize:"20px"
+            fontSize: "20px",
           }}
         >
           Comprar 1
@@ -36,7 +41,7 @@ const Content = () => {
             color: "white",
             padding: "5px",
             borderRadius: "5px",
-            fontSize:"20px"
+            fontSize: "20px",
           }}
         >
           Comprar 2
@@ -51,7 +56,7 @@ const Content = () => {
             color: "white",
             padding: "5px",
             borderRadius: "5px",
-            fontSize:"20px"
+            fontSize: "20px",
           }}
         >
           Comprar 3
@@ -70,21 +75,26 @@ const Content = () => {
           backgroundColor: "#f1f1f1",
           padding: "10px",
           borderRadius: "10px",
-          marginBottom:"5px",
-          fontSize:"20px"
+          marginBottom: "5px",
+          fontSize: "20px",
         }}
       />
       <br />
-      <button type="submit" style={{
-            width: "80%",
-            margin: "5px",
-            border: "none",
-            backgroundColor: "red",
-            color: "white",
-            padding: "10px",
-            borderRadius: "5px",
-            fontSize:"20px"
-          }}>Comprar</button>
+      <button
+        type="submit"
+        style={{
+          width: "80%",
+          margin: "5px",
+          border: "none",
+          backgroundColor: "red",
+          color: "white",
+          padding: "10px",
+          borderRadius: "5px",
+          fontSize: "20px",
+        }}
+      >
+        Comprar
+      </button>
     </div>
   );
 };
