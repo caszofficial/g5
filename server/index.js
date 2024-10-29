@@ -3,7 +3,7 @@ import { MercadoPagoConfig, Preference } from "mercadopago";
 import express from "express";
 import cors from "cors";
 // Agrega credenciales
-const client = new MercadoPagoConfig({ accessToken: "YOUR_ACCESS_TOKEN" });
+const client = new MercadoPagoConfig({ accessToken: "TEST-2966235563486541-102919-6baf7e692bb2837d6a9ab2b9fcb1db31-187785634" });
 
 // const preference = new Preference(client);
 
@@ -49,7 +49,7 @@ app.post("/create_preference", async (req, res) => {
         },
       ],
       back_urls: {
-        success: "",
+        success: "www.google.com",
         failure: "",
         pending: "",
       },

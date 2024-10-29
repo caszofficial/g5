@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 const Content = () => {
+  const [preferenceId, setPreferenceId] = useState(null);
+
+  const comprarTicket = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/create_preference",
+        {
+          title: "Mi producto",
+          quantity: 1,
+          unit_price: 5000,
+        }
+      );
+      const { id } = response.data;
+      return id;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  initMercadoPago("TEST-9d60822a-b0e8-42d6-81bf-ec409508d8e8", {
+    locale: "es-CO",
+  });
+
+  const handleBuy = async () => {
+    const id = await comprarTicket();
+    if (id) [setPreferenceId(id)];
+  };
+
   return (
     <div>
       <h1>Ganate un Mercedez A200 0km</h1>
@@ -18,6 +49,7 @@ const Content = () => {
         }}
       >
         <button
+          onClick={handleBuy}
           style={{
             width: "80%",
             margin: "5px",
@@ -31,6 +63,10 @@ const Content = () => {
         >
           Comprar 1
         </button>
+        {preferenceId && (
+          <Wallet initialization={{ preferenceId: preferenceId }} />
+        )}
+
         <br />
         <button
           style={{
