@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 const Content = () => {
   const [preferenceId, setPreferenceId] = useState(null);
+  const [quantity, setQuantity] = useState("");
+  const [customQuantity, setCustomQuantity] = useState("");
+  const [productName, setProductName] = useState("");
+
+  const handleBuyTicket = async () => {
+    try {
+      localStorage.setItem("cantidad", quantity);
+      const id = await comprarTicket();
+      if (id) [setPreferenceId(id)];
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const comprarTicket = async () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/create_preference",
         {
-          title: "Mi producto",
-          quantity: 1,
-          unit_price: 5000,
+          title: productName,
+          quantity: quantity,
+          price: 5000,
         }
       );
+      console.log(response.data);
       const { id } = response.data;
       return id;
     } catch (error) {
@@ -27,11 +41,11 @@ const Content = () => {
     locale: "es-CO",
   });
 
-  const handleBuy = async () => {
-    const id = await comprarTicket();
-    if (id) [setPreferenceId(id)];
-  };
+  useEffect(() => {
+    handleBuyTicket();
+  }, [quantity, productName]);
 
+  console.log(quantity, productName);
   return (
     <div>
       <h1>Ganate un Mercedez A200 0km</h1>
@@ -49,7 +63,11 @@ const Content = () => {
         }}
       >
         <button
-          onClick={handleBuy}
+          onClick={() => {
+            setQuantity(1);
+            setCantidad(1);
+            setProductName("Un Boleto");
+          }}
           style={{
             width: "80%",
             margin: "5px",
@@ -63,12 +81,17 @@ const Content = () => {
         >
           Comprar 1
         </button>
-        {preferenceId && (
+        {preferenceId && quantity !== "" && (
           <Wallet initialization={{ preferenceId: preferenceId }} />
         )}
 
         <br />
         <button
+          onClick={() => {
+            setQuantity(2);
+            setCantidad(2);
+            setProductName("Dos Boletos");
+          }}
           style={{
             width: "80%",
             margin: "5px",
@@ -84,6 +107,11 @@ const Content = () => {
         </button>
         <br />
         <button
+          onClick={() => {
+            setQuantity(5);
+            setCantidad(5);
+            setProductName("Cinco Boletos");
+          }}
           style={{
             width: "80%",
             margin: "5px",
@@ -95,11 +123,14 @@ const Content = () => {
             fontSize: "20px",
           }}
         >
-          Comprar 3
+          Comprar 5
         </button>
       </div>
       <input
         type="number"
+        onChange={(e) => {
+          setCustomQuantity(Number(e.target.value));
+        }}
         // onChange={(e) => setCantidad(Number(e.target.value))}
         // value={cantidad || ""}
         // max={totalNumerosPosibles - numerosYaGenerados.size}
@@ -117,7 +148,11 @@ const Content = () => {
       />
       <br />
       <button
-        type="submit"
+        onClick={() => {
+          setQuantity(customQuantity);
+          setCantidad(customQuantity);
+          setProductName(` ${quantity} Boletos`);
+        }}
         style={{
           width: "80%",
           margin: "5px",

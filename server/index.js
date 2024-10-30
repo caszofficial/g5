@@ -42,14 +42,14 @@ app.post("/create_preference", async (req, res) => {
     const body = {
       items: [
         {
-          title: "Mi producto",
-          quantity: 1,
-          unit_price: 5000,
+          title: req.body.title,
+          quantity: req.body.quantity,
+          unit_price: req.body.price,
           currency_id: "COP",
         },
       ],
       back_urls: {
-        success: "www.google.com",
+        success: "http://localhost:5173/payment_confirmed",
         failure: "",
         pending: "",
       },
