@@ -24,4 +24,6 @@
   text-align: center;
   padding: 20px;
   background-color: green;
+  display: flex;
+  justify-content: space-evenly;
 }

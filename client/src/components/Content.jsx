@@ -45,10 +45,9 @@ const Content = () => {
     handleBuyTicket();
   }, [quantity, productName]);
 
-  console.log(quantity, productName);
   return (
     <div>
-      <h1>Ganate un Mercedez A200 0km</h1>
+      <h1 style={{fontFamily:"Arial"}}>Ganate un Mercedes A200 0km</h1>
       <div style={{ marginBottom: "20px" }}>
         <img
           src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
@@ -81,10 +80,6 @@ const Content = () => {
         >
           Comprar 1
         </button>
-        {preferenceId && quantity !== "" && (
-          <Wallet initialization={{ preferenceId: preferenceId }} />
-        )}
-
         <br />
         <button
           onClick={() => {
@@ -131,9 +126,6 @@ const Content = () => {
         onChange={(e) => {
           setCustomQuantity(Number(e.target.value));
         }}
-        // onChange={(e) => setCantidad(Number(e.target.value))}
-        // value={cantidad || ""}
-        // max={totalNumerosPosibles - numerosYaGenerados.size}
         placeholder="Comprar Mas Numeros"
         style={{
           border: "none",
@@ -166,6 +158,9 @@ const Content = () => {
       >
         Comprar
       </button>
+      {preferenceId && quantity !== "" && (
+        <Wallet initialization={{ preferenceId: preferenceId }} />
+      )}
     </div>
   );
 };

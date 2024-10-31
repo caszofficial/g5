@@ -18,6 +18,7 @@ const DataFill = () => {
     localStorage.getItem("cantidad") || 0
   );
   const [showNumbers, setShowNumbers] = useState(false);
+  console.log(numerosYaGenerados, numerosRecientes);
 
   // Referencia a la colección de Firebase
   const datos = collection(firebase, "ventas");
@@ -93,7 +94,7 @@ const DataFill = () => {
     });
     // Actualizar los números en 'numerosGenerados'
     const docRef = collection(firebase, "numerosGenerados"); // Referencia a la colección
-    await addDoc(docRef, { numeros: numerosRecientes }); // Guardar nuevos números generados
+    numerosRecientes && (await addDoc(docRef, { numeros: numerosRecientes })); // Guardar nuevos números generados
     setNumerosYaGenerados(
       new Set([...numerosYaGenerados, ...numerosRecientes])
     ); // Actualizar el estado
@@ -101,14 +102,15 @@ const DataFill = () => {
 
   console.log(cantidad, "DF");
 
-  // useEffect(() => {
-  //   generarNumerosLoteria(cantidad);
-  // }, []);
+  useEffect(() => {
+    if (numerosRecientes.length > 0) {
+      createData(); // Crear la entrada solo si hay números generados
+    }
+  }, [numerosRecientes]); // Ejecutar cuando numerosRecientes cambie
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
     setShowNumbers(true);
-    await createData(); // Llama a createData para crear la entrada
     generarNumerosLoteria(cantidad);
     // navigate("/shownumbers", { state: { numbers: numerosRecientes } });
     localStorage.removeItem("cantidad");
