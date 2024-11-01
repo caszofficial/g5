@@ -1,21 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../App.css";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 const Content = () => {
   const [preferenceId, setPreferenceId] = useState(null);
+  const [quantity, setQuantity] = useState("");
+  const [customQuantity, setCustomQuantity] = useState("");
+  const [productName, setProductName] = useState("");
+
+  const price = 5000;
+
+  const handleBuyTicket = async () => {
+    try {
+      localStorage.setItem("cantidad", quantity);
+      const id = await comprarTicket();
+      if (id) [setPreferenceId(id)];
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const comprarTicket = async () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/create_preference",
         {
-          title: "Mi producto",
-          quantity: 1,
-          unit_price: 5000,
+          title: productName,
+          quantity: quantity,
+          price: price,
         }
       );
+      console.log(response.data);
       const { id } = response.data;
       return id;
     } catch (error) {
@@ -27,110 +44,84 @@ const Content = () => {
     locale: "es-CO",
   });
 
-  const handleBuy = async () => {
-    const id = await comprarTicket();
-    if (id) [setPreferenceId(id)];
-  };
+  useEffect(() => {
+    handleBuyTicket();
+  }, [quantity, productName]);
 
   return (
-    <div>
-      <h1>Ganate un Mercedez A200 0km</h1>
+    <div className="content">
+      <h1 className="content-title">Ganate un Mercedes A200 0km</h1>
       <div style={{ marginBottom: "20px" }}>
         <img
+          className="content-image"
           src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
           alt=""
-          height="300px"
-          width="100%"
         />
       </div>
-      <div
-        style={{
-          margin: "20px",
-        }}
-      >
+      <div className="content-valor">
+        <p>Valor de cada participacion</p>
+        <p>${price}</p>
+      </div>
+      <div className="buy-buttons">
         <button
-          onClick={handleBuy}
-          style={{
-            width: "80%",
-            margin: "5px",
-            border: "none",
-            backgroundColor: "red",
-            color: "white",
-            padding: "5px",
-            borderRadius: "5px",
-            fontSize: "20px",
+          onClick={() => {
+            setQuantity(1);
+            setCantidad(1);
+            setProductName("Un Boleto");
           }}
         >
-          Comprar 1
-        </button>
-        {preferenceId && (
-          <Wallet initialization={{ preferenceId: preferenceId }} />
-        )}
-
-        <br />
-        <button
-          style={{
-            width: "80%",
-            margin: "5px",
-            border: "none",
-            backgroundColor: "red",
-            color: "white",
-            padding: "5px",
-            borderRadius: "5px",
-            fontSize: "20px",
-          }}
-        >
-          Comprar 2
+          Comprar 1 ${1 * price}
         </button>
         <br />
         <button
-          style={{
-            width: "80%",
-            margin: "5px",
-            border: "none",
-            backgroundColor: "red",
-            color: "white",
-            padding: "5px",
-            borderRadius: "5px",
-            fontSize: "20px",
+          onClick={() => {
+            setQuantity(2);
+            setCantidad(2);
+            setProductName("Dos Boletos");
           }}
         >
-          Comprar 3
+          Comprar 2 ${2 * price}
+        </button>
+        <br />
+        <button
+          onClick={() => {
+            setQuantity(5);
+            setCantidad(5);
+            setProductName("Cinco Boletos");
+          }}
+        >
+          Comprar 5 ${5 * price}
         </button>
       </div>
-      <input
-        type="number"
-        // onChange={(e) => setCantidad(Number(e.target.value))}
-        // value={cantidad || ""}
-        // max={totalNumerosPosibles - numerosYaGenerados.size}
-        placeholder="Comprar Mas Numeros"
-        style={{
-          border: "none",
-          height: "20px",
-          width: "80%",
-          backgroundColor: "#f1f1f1",
-          padding: "10px",
-          borderRadius: "10px",
-          marginBottom: "5px",
-          fontSize: "20px",
-        }}
-      />
-      <br />
-      <button
-        type="submit"
-        style={{
-          width: "80%",
-          margin: "5px",
-          border: "none",
-          backgroundColor: "red",
-          color: "white",
-          padding: "10px",
-          borderRadius: "5px",
-          fontSize: "20px",
-        }}
-      >
-        Comprar
-      </button>
+      <div className="content-deseas-mas">
+        <p>Si Deseas Adquirir Más</p>
+      </div>
+      <div className="buy-buttons-2">
+        <input
+          type="number"
+          min={0}
+          onChange={(e) => {
+            setCustomQuantity(Number(e.target.value));
+          }}
+          placeholder="10"
+        />
+
+        <button
+          onClick={() => {
+            setQuantity(customQuantity);
+            setCantidad(customQuantity);
+            setProductName(` ${quantity} Boletos`);
+          }}
+        >
+          Comprar 
+          {customQuantity
+            ? " " + customQuantity + " " + "$" + customQuantity * price
+            : ""}
+        </button>
+      </div>
+      {preferenceId && quantity !== "" && (
+        <Wallet initialization={{ preferenceId: preferenceId }} />
+      )}
     </div>
   );
 };
