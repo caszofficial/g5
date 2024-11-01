@@ -1,12 +1,15 @@
 import React from "react";
+import "../App.css"
 
 const Header = () => {
   return (
     <header
-      style={{
-        backgroundColor: "#2e86c1",
-        color: "#ffd700",
-      }}
+    className="header"
+      // style={{
+        
+      //   backgroundColor: "#2e86c1",
+      //   color: "#ffd700",
+      // }}
     >
       <div>
         <h1>SDS</h1>
