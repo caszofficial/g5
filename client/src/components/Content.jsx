@@ -99,6 +99,7 @@ const Content = () => {
       <div className="buy-buttons-2">
         <input
           type="number"
+          min={0}
           onChange={(e) => {
             setCustomQuantity(Number(e.target.value));
           }}

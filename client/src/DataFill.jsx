@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const DataFill = () => {
   const [name, setName] = useState("");
@@ -117,41 +119,59 @@ const DataFill = () => {
   };
 
   return (
-    <div>
-      <form id="form" onSubmit={handleSubmit}>
-        <p>Total de números generados: {numerosYaGenerados.size}</p>
-        <h1>Generador de Números de Lotería</h1>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nombre"
-        />
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Correo Electronico"
-        />
-        <input
-          type="text"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="Numero de Telefono"
-        />
-        <input
-          type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Direccion"
-        />
-        <button type="submit">Generar {cantidad} Números</button>
-      </form>
-      {/* // Mostrar los números generados en esta ejecución */}
+    <div className="datafill">
+      <Header />
+      {!showNumbers ? (
+        <>
+          <form id="form" onSubmit={handleSubmit} className="datafill-form">
+            <p>
+              Gracias por tu compra. Completa tus datos para que recibas tus
+              números, también serán enviados al correo electrónico que usaste.
+            </p>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Nombre"
+            />
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Correo Electronico"
+            />
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Numero de Telefono"
+            />
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Direccion"
+            />
+            <button type="submit">Generar números</button>
+          </form>
+        </>
+      ) : (
+        <div className="datafill-shownumbers">
+          <p className="shownumbers-text">
+            Recuerda que se juega al venderse la totalidad de los números, asi
+            que guardalos muy bien!
+          </p>
+          {numerosRecientes.length > 0 && (
+            <p className="numeros">
+              {showNumbers && numerosRecientes.join(" - ")}
+            </p>
+          )}
 
-      {numerosRecientes.length > 0 && (
-        <p>{showNumbers && numerosRecientes.join(" - ")}</p>
+          <p className="shownumbers-text">Mucha Suerte!</p>
+        </div>
       )}
+
+      <Footer />
     </div>
   );
 };
