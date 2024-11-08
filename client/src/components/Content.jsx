@@ -25,7 +25,7 @@ const Content = () => {
   const comprarTicket = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/mercadopago/create_preference",
+        "https://g5be-399w477nd-caszofficials-projects.vercel.app/api/mercadopago/create_preference",
         {
           title: productName,
           quantity: quantity,

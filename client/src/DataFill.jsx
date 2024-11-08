@@ -22,7 +22,7 @@ const DataFill = () => {
     try {
       // Llama a la API para generar los números
       const response = await axios.post(
-        "http://localhost:3000/api/generar-numeros",
+        "https://g5be-399w477nd-caszofficials-projects.vercel.app/api/generar-numeros",
         {
           name,
           email,
