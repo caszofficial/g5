@@ -2,30 +2,54 @@
 import { MercadoPagoConfig, Preference } from "mercadopago";
 import express from "express";
 import cors from "cors";
+import admin from "firebase-admin";
+import serviceAccount from "./path/to/serviceAccountKey.json" assert { type: "json" };
+
 // Agrega credenciales
-const client = new MercadoPagoConfig({ accessToken: "TEST-2966235563486541-102919-6baf7e692bb2837d6a9ab2b9fcb1db31-187785634" });
+const client = new MercadoPagoConfig({
+  accessToken:
+    "TEST-2966235563486541-102919-6baf7e692bb2837d6a9ab2b9fcb1db31-187785634",
+});
 
-// const preference = new Preference(client);
 
-// preference
-//   .create({
-//     body: {
-//       items: [
-//         {
-//           title: "Mi producto",
-//           quantity: 1,
-//           unit_price: 5000,
-//         },
-//       ],
-//       back_urls: {
-//         success: "",
-//         failure: "",
-//         pending: "",
-//       },
-//     },
-//   })
-//   .then(console.log)
-//   .catch(console.log);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const numeros = admin.firestore().collection("numerosGenerados");
+
+let todosLosNumeros = [];
+let numerosYaGenerados = new Set()
+
+const generarTodosLosNumeros = () => {
+  const numeros = [];
+  for (let i = 0; i < totalNumerosPosibles; i++) {
+    numeros.push(i.toString().padStart(5, "0")); // Genera 00000, 00001, ..., 99999
+  }
+  return numeros
+};
+
+const getNumbers = async () => {
+  try {
+    const data = await numeros.get(); // Recuperar documentos de 'numerosGenerados'
+    const allNumbers = data.docs.flatMap((doc) => doc.data().numeros || []); // Obtener todos los arreglos 'numeros' de cada documento
+    return new Set(allNumbers); // Devolver los números únicos como un Set
+  } catch (error) {
+    console.error("Error al obtener números:", error);
+  }
+};
+
+const mezclarNumeros = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
+
+
+
 
 const app = express();
 const port = 3000;
@@ -33,7 +57,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/",  (req, res) => {
+app.get("/", (req, res) => {
   res.send(`Server runing in port ${port}`);
 });
 
