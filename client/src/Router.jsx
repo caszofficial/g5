@@ -2,8 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import App from "./App";
 import DataFill from "./DataFill";
-import ShowNumbers from "./ShowNumbers";
-import Header from "./components/Header";
 
 const Router = () => {
   return (
@@ -12,7 +10,7 @@ const Router = () => {
       <Routes>
         <Route exact path="/" element={<App />} />
         <Route path="/payment_confirmed" element={<DataFill />} />
-        <Route path="/shownumbers" element={<ShowNumbers />} />
+        {/* <Route path="/shownumbers" element={<ShowNumbers />} /> */}
       </Routes>
     </>
   );

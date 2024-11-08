@@ -1,133 +1,74 @@
-import firebase from "./firebase/firebase";
-import { useState, useEffect } from "react";
-import "./App.css";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import axios from "axios";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import "./App.css";
 
 const DataFill = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const navigate = useNavigate();
+  const [numerosRecientes, setNumerosRecientes] = useState([]);
+  const cantidad = localStorage.getItem("cantidad");
 
-  const [numerosYaGenerados, setNumerosYaGenerados] = useState(new Set()); // Usamos Set para mayor eficiencia
-  const [numerosRecientes, setNumerosRecientes] = useState([]); // Números generados en la última ejecución
-  const totalNumerosPosibles = 100000; // Total de números posibles (00000 a 99999)
-  const [cantidad, setCantidad] = useState(
-    localStorage.getItem("cantidad") || 0
-  );
   const [showNumbers, setShowNumbers] = useState(false);
-  console.log(numerosYaGenerados, numerosRecientes);
 
-  // Referencia a la colección de Firebase
-  const datos = collection(firebase, "ventas");
-  const numeros = collection(firebase, "numerosGenerados");
-
-  // Inicializa todos los números posibles al cargar el componente
-  const [todosLosNumeros, setTodosLosNumeros] = useState([]);
-
-  useEffect(() => {
-    // Generar todos los números posibles desde '00000' a '99999'
-    const generarTodosLosNumeros = () => {
-      const numeros = [];
-      for (let i = 0; i < totalNumerosPosibles; i++) {
-        numeros.push(i.toString().padStart(5, "0")); // Genera 00000, 00001, ..., 99999
-      }
-      setTodosLosNumeros(numeros);
-    };
-
-    generarTodosLosNumeros();
-    getNumbers(); // Cargar números existentes de Firebase al inicio
-  }, []);
-
-  // Función para recuperar números ya generados desde Firebase
-  const getNumbers = async () => {
-    const data = await getDocs(numeros); // Recuperar documentos de 'numerosGenerados'
-    const allNumbers = data.docs.flatMap((doc) => doc.data().numeros || []); // Obtener todos los arreglos 'numeros' de cada documento
-    setNumerosYaGenerados(new Set(allNumbers)); // Actualizar el estado con todos los números únicos
-  };
-
-  // Función para generar números de lotería
-  const generarNumerosLoteria = (cantidad) => {
-    if (numerosYaGenerados.size >= totalNumerosPosibles) {
-      alert("Todos los números posibles ya han sido generados.");
-      return;
-    }
-
-    const nuevosNumeros = [];
-    let posiblesNumeros = todosLosNumeros.filter(
-      (numero) => !numerosYaGenerados.has(numero)
-    );
-
-    // Mezclar los números restantes para generar aleatoriedad
-    posiblesNumeros = mezclarNumeros(posiblesNumeros);
-
-    for (let i = 0; i < cantidad && posiblesNumeros.length > 0; i++) {
-      const numero = posiblesNumeros.pop(); // Extraer uno del final (eficiente)
-      nuevosNumeros.push(numero);
-      numerosYaGenerados.add(numero); // Añadir al conjunto de generados
-    }
-
-    setNumerosRecientes(nuevosNumeros); // Números de la última ejecución
-    setNumerosYaGenerados(new Set(numerosYaGenerados)); // Actualizar el Set
-  };
-
-  // Función para mezclar un arreglo (Fisher-Yates Shuffle)
-  const mezclarNumeros = (arr) => {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  };
-
-  // Crear datos en la colección 'ventas' y actualizar números en 'numerosGenerados'
-  const createData = async (e) => {
-    // Crear documento en la colección 'ventas'
-    await addDoc(datos, {
-      name: name,
-      email: email,
-      phone: phone,
-      address: address,
-      numbers: numerosRecientes, // Guardar los números generados recientes
-    });
-    // Actualizar los números en 'numerosGenerados'
-    const docRef = collection(firebase, "numerosGenerados"); // Referencia a la colección
-    numerosRecientes && (await addDoc(docRef, { numeros: numerosRecientes })); // Guardar nuevos números generados
-    setNumerosYaGenerados(
-      new Set([...numerosYaGenerados, ...numerosRecientes])
-    ); // Actualizar el estado
-  };
-
-  console.log(cantidad, "DF");
-
-  useEffect(() => {
-    if (numerosRecientes.length > 0) {
-      createData(); // Crear la entrada solo si hay números generados
-    }
-  }, [numerosRecientes]); // Ejecutar cuando numerosRecientes cambie
-
+  // Configura la función para hacer la llamada al backend
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-    setShowNumbers(true);
-    generarNumerosLoteria(cantidad);
-    // navigate("/shownumbers", { state: { numbers: numerosRecientes } });
-    localStorage.removeItem("cantidad");
+    e.preventDefault();
+    setShowNumbers(false); // Oculta los números anteriores al hacer una nueva solicitud
+
+    try {
+      // Llama a la API para generar los números
+      const response = await axios.post(
+        "https://g5be-399w477nd-caszofficials-projects.vercel.app/api/generar-numeros",
+        {
+          name,
+          email,
+          phone,
+          address,
+          cantidad: parseInt(cantidad),
+        }
+      );
+
+      if (response.data.success) {
+        setNumerosRecientes(response.data.numerosRecientes); // Guarda los números generados en el estado
+        setShowNumbers(true); // Muestra los números generados
+      } else {
+        console.error("Error al generar números:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error al conectar con el backend:", error);
+    }
   };
 
   return (
     <div className="datafill">
       <Header />
       {!showNumbers ? (
-        <>
-          <form id="form" onSubmit={handleSubmit} className="datafill-form">
+        <div className="datafill-content">
+          <div className="datafill-thanks">
             <p>
               Gracias por tu compra. Completa tus datos para que recibas tus
               números, también serán enviados al correo electrónico que usaste.
             </p>
+          </div>
+
+          <div className="datafill-img">
+            <img
+              src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
+              alt=""
+            />
+          </div>
+          <form id="form" onSubmit={handleSubmit} className="datafill-form">
+            <div className="datafill-thanks-pc">
+              <p>
+                Gracias por tu compra. Completa tus datos para que recibas tus
+                números, también serán enviados al correo electrónico que
+                usaste.
+              </p>
+            </div>
             <input
               type="text"
               value={name}
@@ -154,18 +95,36 @@ const DataFill = () => {
             />
             <button type="submit">Generar números</button>
           </form>
-        </>
+          <div className="datafill-img-pc">
+            <img
+              src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
+              alt=""
+            />
+          </div>
+        </div>
       ) : (
         <div className="datafill-shownumbers">
           <p className="shownumbers-text">
-            Recuerda que se juega al venderse la totalidad de los números, asi
-            que guardalos muy bien!
+            Recuerda que se juega al venderse la totalidad de los números
+            <br />
+            De esa manera nos aseguramos de que siempre tengamos un feliz
+            ganador!
+            <br />
+            Asi que guardalos muy bien!
           </p>
-          {numerosRecientes.length > 0 && (
-            <p className="numeros">
-              {showNumbers && numerosRecientes.join(" - ")}
-            </p>
-          )}
+          <div className="numeros-container">
+            {numerosRecientes.length > 0 ? (
+              numerosRecientes.map((n) => <p className="numeros">{n}</p>)
+            ) : (
+              <>
+                <p className="numeros">12345</p>
+                <p className="numeros">12345</p>
+                <p className="numeros">12345</p>
+                <p className="numeros">12345</p>
+                <p className="numeros">12345</p>
+              </>
+            )}
+          </div>
 
           <p className="shownumbers-text">Mucha Suerte!</p>
         </div>

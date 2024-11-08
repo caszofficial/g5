@@ -25,14 +25,13 @@ const Content = () => {
   const comprarTicket = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/create_preference",
+        "https://g5be-399w477nd-caszofficials-projects.vercel.app/api/mercadopago/create_preference",
         {
           title: productName,
           quantity: quantity,
           price: price,
         }
       );
-      console.log(response.data);
       const { id } = response.data;
       return id;
     } catch (error) {
@@ -45,7 +44,9 @@ const Content = () => {
   });
 
   useEffect(() => {
-    handleBuyTicket();
+    if(quantity && productName){
+      handleBuyTicket()
+    }
   }, [quantity, productName]);
 
   return (
@@ -66,7 +67,6 @@ const Content = () => {
         <button
           onClick={() => {
             setQuantity(1);
-            setCantidad(1);
             setProductName("Un Boleto");
           }}
         >
@@ -76,7 +76,6 @@ const Content = () => {
         <button
           onClick={() => {
             setQuantity(2);
-            setCantidad(2);
             setProductName("Dos Boletos");
           }}
         >
@@ -86,7 +85,6 @@ const Content = () => {
         <button
           onClick={() => {
             setQuantity(5);
-            setCantidad(5);
             setProductName("Cinco Boletos");
           }}
         >
@@ -109,11 +107,11 @@ const Content = () => {
         <button
           onClick={() => {
             setQuantity(customQuantity);
-            setCantidad(customQuantity);
             setProductName(` ${quantity} Boletos`);
+            handleBuyTicket();
           }}
         >
-          Comprar 
+          Comprar
           {customQuantity
             ? " " + customQuantity + " " + "$" + customQuantity * price
             : ""}
