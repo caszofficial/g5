@@ -6,14 +6,12 @@ import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(
-  cors({
-    origin: ["https://g5-tawny.vercel.app"], // Especifica tu dominio en producción
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"]
-
-  })
-);
+app.use(cors({
+  origin: "https://g5-tawny.vercel.app",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+}));
 app.use(express.json());
 
 // Rutas
