@@ -8,6 +8,9 @@ const client = new MercadoPagoConfig({
 // Función para crear la preferencia de pago
 export const createPreference = async (req, res) => {
   try {
+    res.setHeader("Access-Control-Allow-Origin", "https://g5-tawny.vercel.app");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     const { title, quantity, price } = req.body;
 
     const body = {
@@ -20,9 +23,9 @@ export const createPreference = async (req, res) => {
         },
       ],
       back_urls: {
-        success: "http://localhost:5173/payment_confirmed", // URL de éxito
-        failure: "http://localhost:5173/payment_failed", // URL de fallo
-        pending: "http://localhost:5173/payment_pending", // URL de pendiente
+        success: "https://g5-tawny.vercel.app/payment_confirmed", // URL de éxito
+        failure: "https://g5-tawny.vercel.app/payment_failed", // URL de fallo
+        pending: "https://g5-tawny.vercel.app/payment_pending", // URL de pendiente
       },
       auto_return: "approved", // Para que se redirija automáticamente al cliente después de una compra exitosa
     };
