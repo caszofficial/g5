@@ -8,10 +8,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(
   cors({
-    origin: "*",
-    methods: "*",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    origin: "https://g5-tawny.vercel.app",
+    methods: "GET,POST",
+    allowedHeaders: "Content-Type",
+
   })
 );
 app.use(express.json());
