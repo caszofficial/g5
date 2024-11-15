@@ -1,6 +1,5 @@
 // firebaseConfig.js
 import admin from "firebase-admin";
-import { firebaseConfig } from "./serviceAccountKey.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
