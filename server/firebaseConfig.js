@@ -2,7 +2,9 @@
 import admin from "firebase-admin";
 import { firebaseConfig } from "./serviceAccountKey.js";
 
-admin.initializeApp(firebaseConfig);
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseConfig),
+});
 
 const db = admin.firestore();
 
