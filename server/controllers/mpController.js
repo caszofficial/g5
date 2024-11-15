@@ -8,9 +8,6 @@ const client = new MercadoPagoConfig({
 // Función para crear la preferencia de pago
 export const createPreference = async (req, res) => {
   try {
-    res.setHeader("Access-Control-Allow-Origin", "https://g5-tawny.vercel.app");
-    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     const { title, quantity, price } = req.body;
 
     const body = {
