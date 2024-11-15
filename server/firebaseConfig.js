@@ -1,6 +1,6 @@
 // firebaseConfig.js
 import admin from "firebase-admin";
-import serviceAccount, { firebaseConfig } from "./serviceAccountKey" assert { type: "json" };
+import { firebaseConfig } from "./serviceAccountKey.js";
 
 admin.initializeApp(firebaseConfig);
 
