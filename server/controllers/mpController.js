@@ -20,9 +20,9 @@ export const createPreference = async (req, res) => {
         },
       ],
       back_urls: {
-        success: "https://g5-tawny.vercel.app/payment_confirmed", // URL de éxito
-        failure: "https://g5-tawny.vercel.app/payment_failed", // URL de fallo
-        pending: "https://g5-tawny.vercel.app/payment_pending", // URL de pendiente
+        success: "https://g5-frontend.onrender.com/payment_confirmed", // URL de éxito
+        failure: "https://g5-frontend.onrender.com/payment_failed", // URL de fallo
+        pending: "https://g5-frontend.onrender.com/payment_pending", // URL de pendiente
       },
       auto_return: "approved", // Para que se redirija automáticamente al cliente después de una compra exitosa
     };
