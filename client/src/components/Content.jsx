@@ -25,7 +25,7 @@ const Content = () => {
   const comprarTicket = async () => {
     try {
       const response = await axios.post(
-        "https://g5be-399w477nd-caszofficials-projects.vercel.app/api/mercadopago/create_preference",
+        "https://g5.onrender.com/api/mercadopago/create_preference",
         {
           title: productName,
           quantity: quantity,
@@ -44,8 +44,8 @@ const Content = () => {
   });
 
   useEffect(() => {
-    if(quantity && productName){
-      handleBuyTicket()
+    if (quantity && productName) {
+      handleBuyTicket();
     }
   }, [quantity, productName]);
 
