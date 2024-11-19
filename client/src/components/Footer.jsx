@@ -5,13 +5,19 @@ const Footer = () => {
     <footer className="footer">
       <div>
         <ul style={{ listStyle: "none", textAlign: "center" }}>
-          <li style={{ margin: "4px" }}>SDS</li>
-          <li style={{ margin: "4px" }}>CR 43A #7-50</li>
-          <li style={{ margin: "4px" }}>+573001112233</li>
+          <li>SDS</li>
+          <li>CR 43A #7-50</li>
+          <li>+573001112233</li>
+          <li>sdsfabricadesuenos@gmail.com</li>
         </ul>
       </div>
-      <div>
-        <h1>LOGO</h1>
+      <div style={{ height:"50px", margin:"20px 0px"}}>
+        <img
+          src="../../src/assets/SDS_Logo_blanco.png"
+          alt="No image Found"
+          width="100%"
+          height="100%"
+        />
       </div>
     </footer>
   );
