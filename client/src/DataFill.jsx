@@ -22,7 +22,9 @@ const DataFill = () => {
     try {
       // Llama a la API para generar los números
       const response = await axios.post(
-        "https://g5.onrender.com/api/generar-numeros",
+        import.meta.env.VITE_ENV === "prod"
+          ? "https://g5.onrender.com/api/generar-numeros"
+          : "http://localhost:3000/api/generar-numeros",
         {
           name,
           email,
@@ -35,6 +37,7 @@ const DataFill = () => {
       if (response.data.success) {
         setNumerosRecientes(response.data.numerosRecientes); // Guarda los números generados en el estado
         setShowNumbers(true); // Muestra los números generados
+        localStorage.removeItem("cantidad");
       } else {
         console.error("Error al generar números:", response.data.error);
       }

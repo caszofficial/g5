@@ -25,7 +25,9 @@ const Content = () => {
   const comprarTicket = async () => {
     try {
       const response = await axios.post(
-        "https://g5.onrender.com/api/mercadopago/create_preference",
+        import.meta.env.VITE_ENV === "prod"
+          ? "https://g5.onrender.com/api/mercadopago/create_preference"
+          : "http://localhost:3000/api/mercadopago/create_preference",
         {
           title: productName,
           quantity: quantity,
@@ -52,7 +54,7 @@ const Content = () => {
   return (
     <div className="content">
       <h1 className="content-title">Ganate un Mercedes A200 0km</h1>
-      <div style={{ marginBottom: "20px" }}>
+      <div className="content-image-container">
         <img
           className="content-image"
           src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
