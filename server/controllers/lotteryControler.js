@@ -49,7 +49,12 @@ const generarNumerosLoteria = async (cantidad) => {
 // Guardar datos en la colección 'ventas' y actualizar en 'numerosGenerados'
 const createData = async (name, email, phone, address, numerosRecientes) => {
   try {
-    await db.collection("ventas").add({
+    const batch = db.batch();
+    const ventasRef = db.collection("ventas").doc();
+    const numerosGeneradosRef = db.collection("numerosGenerados").doc();
+
+    // Añadir a la colección "ventas"
+    batch.set(ventasRef, {
       name,
       email,
       phone,
@@ -57,7 +62,29 @@ const createData = async (name, email, phone, address, numerosRecientes) => {
       numbers: numerosRecientes,
     });
 
-    await db.collection("numerosGenerados").add({ numeros: numerosRecientes });
+    // Validar y guardar números únicos en una transacción atómica
+    await db.runTransaction(async (transaction) => {
+      const snapshot = await transaction.get(db.collection("numerosGenerados"));
+      const yaGenerados = new Set(
+        snapshot.docs.flatMap((doc) => doc.data().numeros || [])
+      );
+
+      // Verificar si los números ya existen
+      for (const numero of numerosRecientes) {
+        if (yaGenerados.has(numero)) {
+          throw new Error(
+            `El número ${numero} ya fue generado por otro usuario.`
+          );
+        }
+      }
+
+      // Añadir los números a la colección "numerosGenerados"
+      batch.set(numerosGeneradosRef, { numeros: numerosRecientes });
+    });
+
+    // Aplicar el batch
+    await batch.commit();
+
     return { success: true, numerosRecientes };
   } catch (error) {
     console.error("Error al guardar datos:", error);
