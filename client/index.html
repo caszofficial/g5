@@ -15,28 +15,23 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <!-- <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-    
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyBRz44Oemg3HZDMOU1UKmuYv3Fk24b4y0Q",
-        authDomain: "g5-test-7258e.firebaseapp.com",
-        projectId: "g5-test-7258e",
-        storageBucket: "g5-test-7258e.appspot.com",
-        messagingSenderId: "618156886466",
-        appId: "1:618156886466:web:81c1e8aa4a237a73ce6e5b",
-        measurementId: "G-G5QQ18ZLCE"
-      };
-    
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-    </script> -->
+    <script>
+      {
+        document.oncontextmenu = () => {
+          return false;
+        };
+        document.onkeydown = (e) => {
+          if (e.key == "F12") {
+            return false;
+          }
+          if (e.ctrlKey && e.key == "u") {
+            return false;
+          }
+          if (e.ctrlKey && e.shiftKey && e.code == "KeyI") {
+            return false;
+          }
+        };
+      }
+    </script>
   </body>
 </html>
