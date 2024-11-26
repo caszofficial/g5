@@ -43,7 +43,7 @@ const DataFill = () => {
         let templateParams = {
           to_name: name,
           numbers:
-            numerosRecientes.lenght > 0
+            await numerosRecientes.lenght > 0
               ? numerosRecientes.join(", ")
               : "12345",
           to_email: email,
