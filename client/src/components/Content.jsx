@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../App.css";
+import { Progress } from 'rsuite';
+import 'rsuite/Progress/styles/index.css';
+
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
@@ -9,6 +12,7 @@ const Content = () => {
   const [quantity, setQuantity] = useState("");
   const [customQuantity, setCustomQuantity] = useState("");
   const [productName, setProductName] = useState("");
+  const [porcentaje, setPorcentaje] = useState(null);
 
   const price = 5000;
 
@@ -46,6 +50,23 @@ const Content = () => {
   });
 
   useEffect(() => {
+    const getPorcentaje = async () => {
+      try {
+        const data = await axios.get(
+          import.meta.env.VITE_ENV === "prod"
+            ? "https://g5.onrender.com/api/porcentaje"
+            : "http://localhost:3000/api/porcentaje"
+        );
+
+        setPorcentaje(Number(data.data.porcentaje.toFixed(2)));
+      } catch (error) {
+        console.log("error al traer el porcentaje");
+      }
+    };
+    getPorcentaje();
+  }, []);
+
+  useEffect(() => {
     if (quantity && productName) {
       handleBuyTicket();
     }
@@ -60,6 +81,11 @@ const Content = () => {
           src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
           alt=""
         />
+      </div>
+      <div>
+        {/* <progress value={porcentaje} /> */}
+        <Progress.Line percent={porcentaje}  strokeColor="#ffd700"/>
+        <p>No te quedes sin participar</p>
       </div>
       <div className="content-valor">
         <p>Valor de cada participacion</p>
