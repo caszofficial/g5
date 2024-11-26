@@ -3,6 +3,27 @@ import db from "../firebaseConfig.js";
 
 const totalNumerosPosibles = 100000;
 
+
+export const obtenerPorcentajeNumerosGenerados = async (req, res) => {
+  try {
+    const numerosRef = db.collection("numerosGenerados");
+    const data = await numerosRef.get();
+
+    // Contar la cantidad total de números generados
+    const totalNumerosGenerados = data.docs.reduce((total, doc) => {
+      return total + (doc.data().numeros ? doc.data().numeros.length : 0);
+    }, 0);
+
+    const porcentaje = (totalNumerosGenerados / totalNumerosPosibles) * 100;
+
+    res.status(200).json({ success: true, porcentaje });
+  } catch (error) {
+    console.error("Error al obtener el porcentaje de números generados:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
 // Generar todos los números posibles desde '00000' a '99999'
 const generarTodosLosNumeros = () => {
   const numeros = [];

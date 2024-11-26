@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import emailjs from "@emailjs/browser";
 import "./App.css";
 
 const DataFill = () => {
@@ -38,6 +39,30 @@ const DataFill = () => {
         setNumerosRecientes(response.data.numerosRecientes); // Guarda los números generados en el estado
         setShowNumbers(true); // Muestra los números generados
         localStorage.removeItem("cantidad");
+
+        let templateParams = {
+          to_name: name,
+          numbers:
+            await numerosRecientes.lenght > 0
+              ? numerosRecientes.join(", ")
+              : "12345",
+          to_email: email,
+          from_name: "SDS",
+        };
+        console.log(templateParams);
+
+        emailjs
+          .send("service_09dyxrg", "template_cdo057w", templateParams, {
+            publicKey: "MVhXrcFqOLzrZJiWt",
+          })
+          .then(
+            (response) => {
+              console.log("SUCCESS!", response.status, response.text);
+            },
+            (error) => {
+              console.log("FAILED...", error);
+            }
+          );
       } else {
         console.error("Error al generar números:", response.data.error);
       }
