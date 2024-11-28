@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -35,34 +35,14 @@ const DataFill = () => {
         }
       );
 
+      console.log(response);
+
       if (response.data.success) {
-        setNumerosRecientes(response.data.numerosRecientes); // Guarda los números generados en el estado
+        const numerosGenerados = response.data.numerosRecientes;
+
+        setNumerosRecientes(numerosGenerados); // Guarda los números generados en el estado
         setShowNumbers(true); // Muestra los números generados
         localStorage.removeItem("cantidad");
-
-        let templateParams = {
-          to_name: name,
-          numbers:
-            await numerosRecientes.lenght > 0
-              ? numerosRecientes.join(", ")
-              : "12345",
-          to_email: email,
-          from_name: "SDS",
-        };
-        console.log(templateParams);
-
-        emailjs
-          .send("service_09dyxrg", "template_cdo057w", templateParams, {
-            publicKey: "MVhXrcFqOLzrZJiWt",
-          })
-          .then(
-            (response) => {
-              console.log("SUCCESS!", response.status, response.text);
-            },
-            (error) => {
-              console.log("FAILED...", error);
-            }
-          );
       } else {
         console.error("Error al generar números:", response.data.error);
       }
@@ -70,6 +50,33 @@ const DataFill = () => {
       console.error("Error al conectar con el backend:", error);
     }
   };
+
+  useEffect(() => {
+    if (numerosRecientes.length > 0) {
+      let templateParams = {
+        to_name: name,
+        numbers: numerosRecientes.join(", "),
+        to_email: email,
+        from_name: "SDS",
+        phone: phone,
+      };
+
+      emailjs
+        .send("service_09dyxrg", "template_cdo057w", templateParams, {
+          publicKey: "MVhXrcFqOLzrZJiWt",
+        })
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          (error) => {
+            console.log("FAILED...", error);
+          }
+        );
+    } else {
+      console.log("hola");
+    }
+  }, [numerosRecientes]);
 
   return (
     <div className="datafill">

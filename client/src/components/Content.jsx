@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../App.css";
-import { Progress } from 'rsuite';
-import 'rsuite/Progress/styles/index.css';
-
+import { Progress } from "rsuite";
+import "rsuite/Progress/styles/index.css";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
@@ -84,12 +83,12 @@ const Content = () => {
       </div>
       <div>
         {/* <progress value={porcentaje} /> */}
-        <Progress.Line percent={porcentaje}  strokeColor="#ffd700"/>
+        <Progress.Line percent={porcentaje} strokeColor="#ffd700" />
         <p>No te quedes sin participar</p>
       </div>
       <div className="content-valor">
         <p>Valor de cada participacion</p>
-        <p>${price}</p>
+        <p>${price.toLocaleString()}</p>
       </div>
       <div className="buy-buttons">
         <button
@@ -98,7 +97,7 @@ const Content = () => {
             setProductName("Un Boleto");
           }}
         >
-          Comprar 1 ${1 * price}
+          Comprar 1 ${(1 * price).toLocaleString()}
         </button>
         <br />
         <button
@@ -107,7 +106,7 @@ const Content = () => {
             setProductName("Dos Boletos");
           }}
         >
-          Comprar 2 ${2 * price}
+          Comprar 2 ${(2 * price).toLocaleString()}
         </button>
         <br />
         <button
@@ -116,7 +115,7 @@ const Content = () => {
             setProductName("Cinco Boletos");
           }}
         >
-          Comprar 5 ${5 * price}
+          Comprar 5 $ {(5 * price).toLocaleString()}
         </button>
       </div>
       <div className="content-deseas-mas">
@@ -141,7 +140,7 @@ const Content = () => {
         >
           Comprar
           {customQuantity
-            ? " " + customQuantity + " " + "$" + customQuantity * price
+            ? " " + customQuantity + " " + "$" + (customQuantity * price).toLocaleString()
             : ""}
         </button>
       </div>
