@@ -13,7 +13,7 @@ const DataFill = () => {
   const [numerosRecientes, setNumerosRecientes] = useState([]);
   const cantidad = localStorage.getItem("cantidad");
 
-  const [showNumbers, setShowNumbers] = useState(false);
+  const [showNumbers, setShowNumbers] = useState(true);
 
   // Configura la función para hacer la llamada al backend
   const handleSubmit = async (e) => {

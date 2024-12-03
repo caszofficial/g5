@@ -42,6 +42,16 @@
   height: 400px;
   margin-bottom: 20px;
 }
+
+.content-percentage {
+  padding: 10px;
+
+  > p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+}
 .content-valor {
   font-size: 20px;
   font-weight: bold;
@@ -69,16 +79,29 @@
     border-radius: 5px;
     font-weight: bold;
     font-size: 20px;
+    transition: background-color 250ms ease-in-out;
   }
 }
 
-.buy-buttons:hover {
-  > button {
-    background-color: #ffd700;
-    padding: 7px;
-    font-weight: bold;
-    color: #071938;
-  }
+#buy-button1:hover {
+  background-color: #ffd700;
+  font-weight: bold;
+  color: #071938;
+}
+#buy-button2:hover {
+  background-color: #ffd700;
+  font-weight: bold;
+  color: #071938;
+}
+#buy-button3:hover {
+  background-color: #ffd700;
+  font-weight: bold;
+  color: #071938;
+}
+#buy-button4:hover {
+  background-color: #ffd700;
+  font-weight: bold;
+  color: #071938;
 }
 
 .buy-buttons-2 {
@@ -116,6 +139,7 @@
     border: none;
     border-radius: 5px;
     font-size: 20px;
+    transition: background-color 250ms ease-in;
   }
 }
 
@@ -173,9 +197,16 @@
     background-color: #071938;
     color: #ffd700;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 10px;
     border: none;
+    transition: background-color 250ms ease-in;
+    font-weight: bold;
+  }
+  > button:hover {
+    background-color: #ffd700;
+    color: #071938;
+    font-weight: bold;
   }
   > p {
     font-size: 20px;

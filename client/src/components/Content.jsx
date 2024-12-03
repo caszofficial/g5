@@ -81,8 +81,8 @@ const Content = () => {
           alt=""
         />
       </div>
-      <div>
-        {/* <progress value={porcentaje} /> */}
+      <div className="content-percentage">
+        <p>Hemos vendido</p>
         <Progress.Line percent={porcentaje} strokeColor="#ffd700" />
         <p>No te quedes sin participar</p>
       </div>
@@ -92,6 +92,7 @@ const Content = () => {
       </div>
       <div className="buy-buttons">
         <button
+        id="buy-button1"
           onClick={() => {
             setQuantity(1);
             setProductName("Un Boleto");
@@ -101,6 +102,7 @@ const Content = () => {
         </button>
         <br />
         <button
+        id="buy-button2"
           onClick={() => {
             setQuantity(2);
             setProductName("Dos Boletos");
@@ -110,6 +112,7 @@ const Content = () => {
         </button>
         <br />
         <button
+        id="buy-button3"
           onClick={() => {
             setQuantity(5);
             setProductName("Cinco Boletos");
@@ -118,6 +121,11 @@ const Content = () => {
           Comprar 5 $ {(5 * price).toLocaleString()}
         </button>
       </div>
+     <div>
+     {preferenceId && quantity !== "" && (
+        <Wallet initialization={{ preferenceId: preferenceId }} />
+      )}
+     </div>
       <div className="content-deseas-mas">
         <p>Si Deseas Adquirir Más</p>
       </div>
@@ -132,6 +140,7 @@ const Content = () => {
         />
 
         <button
+        id="buy-button4"
           onClick={() => {
             setQuantity(customQuantity);
             setProductName(` ${quantity} Boletos`);
@@ -144,9 +153,7 @@ const Content = () => {
             : ""}
         </button>
       </div>
-      {preferenceId && quantity !== "" && (
-        <Wallet initialization={{ preferenceId: preferenceId }} />
-      )}
+      
     </div>
   );
 };
