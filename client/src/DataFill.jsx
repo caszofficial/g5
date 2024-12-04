@@ -13,7 +13,7 @@ const DataFill = () => {
   const [numerosRecientes, setNumerosRecientes] = useState([]);
   const cantidad = localStorage.getItem("cantidad");
 
-  const [showNumbers, setShowNumbers] = useState(true);
+  const [showNumbers, setShowNumbers] = useState(false);
 
   // Configura la función para hacer la llamada al backend
   const handleSubmit = async (e) => {
@@ -84,9 +84,11 @@ const DataFill = () => {
       {!showNumbers ? (
         <div className="datafill-content">
           <div className="datafill-thanks">
+            <p style={{ fontSize: "25px" }}> Gracias por tu compra</p>
+            <br />
             <p>
-              Gracias por tu compra. Completa tus datos para que recibas tus
-              números, también serán enviados al correo electrónico que usaste.
+              Completa tus datos para que recibas tus números, también serán
+              enviados al correo electrónico que usaste.
             </p>
           </div>
 
@@ -140,12 +142,21 @@ const DataFill = () => {
       ) : (
         <div className="datafill-shownumbers">
           <p className="shownumbers-text">
-            Recuerda que se juega al venderse la totalidad de los números
+            RECUERDA
+            <br />
+            <br />
+            Se juega al venderse la totalidad de los números.
+            <br />
             <br />
             De esa manera nos aseguramos de que siempre tengamos un feliz
-            ganador!
+            ganador.
             <br />
-            Asi que guardalos muy bien!
+            <br />
+            ¡Asi que guardalos muy bien!
+          </p>
+          <p className="advertencia">
+            Te recomendamos tomar un pantallazo de tus numeros para que no los
+            pierdas.
           </p>
           <div className="numeros-container">
             {numerosRecientes.length > 0 ? (
@@ -161,7 +172,7 @@ const DataFill = () => {
             )}
           </div>
 
-          <p className="shownumbers-text">Mucha Suerte!</p>
+          <p className="suerte-text">Mucha Suerte!</p>
         </div>
       )}
 

@@ -73,7 +73,8 @@ const Content = () => {
 
   return (
     <div className="content">
-      <h1 className="content-title">Ganate un Mercedes A200 0km</h1>
+      <h1 className="content-title">Dinamica Actual</h1>
+      <h3>Mercedes A200 0km</h3>
       <div className="content-image-container">
         <img
           className="content-image"
