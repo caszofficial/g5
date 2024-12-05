@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../App.css";
-import { Progress } from 'rsuite';
-import 'rsuite/Progress/styles/index.css';
-
+import { Progress } from "rsuite";
+import "rsuite/Progress/styles/index.css";
 
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
@@ -14,7 +13,7 @@ const Content = () => {
   const [productName, setProductName] = useState("");
   const [porcentaje, setPorcentaje] = useState(null);
 
-  const price = 5000;
+  const price = 8000;
 
   const handleBuyTicket = async () => {
     try {
@@ -74,53 +73,64 @@ const Content = () => {
 
   return (
     <div className="content">
-      <h1 className="content-title">Ganate un Mercedes A200 0km</h1>
+      <h1 className="content-title">Dinamica Actual</h1>
+      <h3>Mercedes A200 0km</h3>
       <div className="content-image-container">
+        <div>
         <img
           className="content-image"
           src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
           alt=""
         />
+        </div>
       </div>
-      <div>
-        {/* <progress value={porcentaje} /> */}
-        <Progress.Line percent={porcentaje}  strokeColor="#ffd700"/>
+      <div className="content-percentage">
+        <p>Hemos vendido</p>
+        <Progress.Line percent={porcentaje} strokeColor="#ffd700" />
         <p>No te quedes sin participar</p>
       </div>
       <div className="content-valor">
         <p>Valor de cada participacion</p>
-        <p>${price}</p>
+        <h2>${price.toLocaleString()}</h2>
       </div>
       <div className="buy-buttons">
         <button
+        id="buy-button1"
           onClick={() => {
-            setQuantity(1);
+            setQuantity(5);
             setProductName("Un Boleto");
           }}
         >
-          Comprar 1 ${1 * price}
+          Comprar 5 ${(5 * price).toLocaleString()}
         </button>
         <br />
         <button
+        id="buy-button2"
           onClick={() => {
-            setQuantity(2);
+            setQuantity(10);
             setProductName("Dos Boletos");
           }}
         >
-          Comprar 2 ${2 * price}
+          Comprar 10 ${(10 * price).toLocaleString()}
         </button>
         <br />
         <button
+        id="buy-button3"
           onClick={() => {
-            setQuantity(5);
+            setQuantity(15);
             setProductName("Cinco Boletos");
           }}
         >
-          Comprar 5 ${5 * price}
+          Comprar 15 $ {(15 * price).toLocaleString()}
         </button>
       </div>
+     <div>
+     {preferenceId && quantity !== "" && (
+        <Wallet initialization={{ preferenceId: preferenceId }} />
+      )}
+     </div>
       <div className="content-deseas-mas">
-        <p>Si Deseas Adquirir Más</p>
+        <p>Si deseas adquirir más, por favor escribe la cantidad que deseas</p>
       </div>
       <div className="buy-buttons-2">
         <input
@@ -133,6 +143,7 @@ const Content = () => {
         />
 
         <button
+        id="buy-button4"
           onClick={() => {
             setQuantity(customQuantity);
             setProductName(` ${quantity} Boletos`);
@@ -141,13 +152,11 @@ const Content = () => {
         >
           Comprar
           {customQuantity
-            ? " " + customQuantity + " " + "$" + customQuantity * price
+            ? " " + customQuantity + " " + "$" + (customQuantity * price).toLocaleString()
             : ""}
         </button>
       </div>
-      {preferenceId && quantity !== "" && (
-        <Wallet initialization={{ preferenceId: preferenceId }} />
-      )}
+      
     </div>
   );
 };

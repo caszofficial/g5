@@ -30,11 +30,11 @@ export const createPreference = async (req, res) => {
         failure:
           process.env.ENV === "prod"
             ? "https://g5-frontend.onrender.com/payment_failed"
-            : "http://localhost:5173/payment_confirmed", // URL de fallo
+            : "http://localhost:5173/payment_failed", // URL de fallo
         pending:
           process.env.ENV === "prod"
             ? "https://g5-frontend.onrender.com/payment_pending"
-            : "http://localhost:5173/payment_confirmed", // URL de pendiente
+            : "http://localhost:5173/payment_pending", // URL de pendiente
       },
       auto_return: "approved", // Para que se redirija automáticamente al cliente después de una compra exitosa
     };
