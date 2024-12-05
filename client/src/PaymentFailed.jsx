@@ -7,6 +7,7 @@ const PaymentFailed = () => {
     <div className="payment-failed-main-container">
       <Header />
       <div className="payment-failed-container">
+        <p className="error">ERROR</p>
         <p>Lo sentimos</p>
         <p>No pudimos procesar tu pago</p>
         <p>Por favor intentalo nuevamente.</p>

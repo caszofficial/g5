@@ -13,7 +13,7 @@ const Content = () => {
   const [productName, setProductName] = useState("");
   const [porcentaje, setPorcentaje] = useState(null);
 
-  const price = 5000;
+  const price = 8000;
 
   const handleBuyTicket = async () => {
     try {
@@ -76,11 +76,13 @@ const Content = () => {
       <h1 className="content-title">Dinamica Actual</h1>
       <h3>Mercedes A200 0km</h3>
       <div className="content-image-container">
+        <div>
         <img
           className="content-image"
           src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
           alt=""
         />
+        </div>
       </div>
       <div className="content-percentage">
         <p>Hemos vendido</p>
@@ -89,37 +91,37 @@ const Content = () => {
       </div>
       <div className="content-valor">
         <p>Valor de cada participacion</p>
-        <p>${price.toLocaleString()}</p>
+        <h2>${price.toLocaleString()}</h2>
       </div>
       <div className="buy-buttons">
         <button
         id="buy-button1"
           onClick={() => {
-            setQuantity(1);
+            setQuantity(5);
             setProductName("Un Boleto");
           }}
         >
-          Comprar 1 ${(1 * price).toLocaleString()}
+          Comprar 5 ${(5 * price).toLocaleString()}
         </button>
         <br />
         <button
         id="buy-button2"
           onClick={() => {
-            setQuantity(2);
+            setQuantity(10);
             setProductName("Dos Boletos");
           }}
         >
-          Comprar 2 ${(2 * price).toLocaleString()}
+          Comprar 10 ${(10 * price).toLocaleString()}
         </button>
         <br />
         <button
         id="buy-button3"
           onClick={() => {
-            setQuantity(5);
+            setQuantity(15);
             setProductName("Cinco Boletos");
           }}
         >
-          Comprar 5 $ {(5 * price).toLocaleString()}
+          Comprar 15 $ {(15 * price).toLocaleString()}
         </button>
       </div>
      <div>
@@ -128,7 +130,7 @@ const Content = () => {
       )}
      </div>
       <div className="content-deseas-mas">
-        <p>Si Deseas Adquirir Más</p>
+        <p>Si deseas adquirir más, por favor escribe la cantidad que deseas</p>
       </div>
       <div className="buy-buttons-2">
         <input

@@ -13,7 +13,7 @@ const DataFill = () => {
   const [numerosRecientes, setNumerosRecientes] = useState([]);
   const cantidad = localStorage.getItem("cantidad");
 
-  const [showNumbers, setShowNumbers] = useState(false);
+  const [showNumbers, setShowNumbers] = useState(true);
 
   // Configura la función para hacer la llamada al backend
   const handleSubmit = async (e) => {
@@ -84,7 +84,7 @@ const DataFill = () => {
       {!showNumbers ? (
         <div className="datafill-content">
           <div className="datafill-thanks">
-            <p style={{ fontSize: "25px" }}> Gracias por tu compra</p>
+            <h1> Gracias por tu compra</h1>
             <br />
             <p>
               Completa tus datos para que recibas tus números, también serán
@@ -93,19 +93,14 @@ const DataFill = () => {
           </div>
 
           <div className="datafill-img">
-            <img
-              src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
-              alt=""
-            />
+            <div>
+              <img
+                src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
+                alt=""
+              />
+            </div>
           </div>
           <form id="form" onSubmit={handleSubmit} className="datafill-form">
-            <div className="datafill-thanks-pc">
-              <p>
-                Gracias por tu compra. Completa tus datos para que recibas tus
-                números, también serán enviados al correo electrónico que
-                usaste.
-              </p>
-            </div>
             <input
               type="text"
               value={name}
@@ -132,18 +127,17 @@ const DataFill = () => {
             />
             <button type="submit">Generar números</button>
           </form>
-          <div className="datafill-img-pc">
+          {/* <div className="datafill-img-pc">
             <img
               src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
               alt=""
             />
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className="datafill-shownumbers">
           <p className="shownumbers-text">
-            RECUERDA
-            <br />
+            <h3>RECUERDA</h3>
             <br />
             Se juega al venderse la totalidad de los números.
             <br />

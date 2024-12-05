@@ -6,7 +6,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="header">
+    <div className="header">
       <div>
         <img
           src="../../src/assets/SDS_Logo_blanco.png"
@@ -16,7 +16,7 @@ const Header = () => {
           }
         />
       </div>
-    </header>
+    </div>
   );
 };
 
