@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="footer">
-      <div>
+      <div className="footer-list">
         <ul style={{ listStyle: "none", textAlign: "center" }}>
           <li>SDS</li>
           <li>CR 43A #7-50</li>
@@ -11,12 +11,10 @@ const Footer = () => {
           <li>sdsfabricadesuenos@gmail.com</li>
         </ul>
       </div>
-      <div style={{ height:"50px", margin:"20px 0px"}}>
+      <div className="footer-image">
         <img
-          src="../../src/assets/SDS_Logo_blanco.png"
+          src="https://firebasestorage.googleapis.com/v0/b/sds-main-29a46.firebasestorage.app/o/images%2FSDS_Logo_blanco.png?alt=media&token=19b2e59e-da04-40fc-b67e-f9a1c25fb529"
           alt="No image Found"
-          width="100%"
-          height="100%"
         />
       </div>
     </footer>
