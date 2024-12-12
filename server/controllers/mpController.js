@@ -5,7 +5,7 @@ dotenv.config();
 
 const client = new MercadoPagoConfig({
   accessToken:
-    "TEST-2966235563486541-102919-6baf7e692bb2837d6a9ab2b9fcb1db31-187785634",
+    process.env.MP_ACCESS_TOKEN,
 });
 
 // Función para crear la preferencia de pago

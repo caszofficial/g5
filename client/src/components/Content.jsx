@@ -44,7 +44,7 @@ const Content = () => {
     }
   };
 
-  initMercadoPago("TEST-9d60822a-b0e8-42d6-81bf-ec409508d8e8", {
+  initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY, {
     locale: "es-CO",
   });
 
