@@ -74,14 +74,15 @@ const Content = () => {
   return (
     <div className="content">
       <h1 className="content-title">Dinamica Actual</h1>
-      <h3>Mercedes A200 0km</h3>
+      <h3>Chevrolet Onix RS 0km +</h3>
+      <h3>$10.000.000</h3>
       <div className="content-image-container">
         <div>
-        <img
-          className="content-image"
-          src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
-          alt=""
-        />
+          <img
+            className="content-image"
+            src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
+            alt=""
+          />
         </div>
       </div>
       <div className="content-percentage">
@@ -95,7 +96,7 @@ const Content = () => {
       </div>
       <div className="buy-buttons">
         <button
-        id="buy-button1"
+          id="buy-button1"
           onClick={() => {
             setQuantity(5);
             setProductName("Un Boleto");
@@ -105,7 +106,7 @@ const Content = () => {
         </button>
         <br />
         <button
-        id="buy-button2"
+          id="buy-button2"
           onClick={() => {
             setQuantity(10);
             setProductName("Dos Boletos");
@@ -115,7 +116,7 @@ const Content = () => {
         </button>
         <br />
         <button
-        id="buy-button3"
+          id="buy-button3"
           onClick={() => {
             setQuantity(15);
             setProductName("Cinco Boletos");
@@ -124,11 +125,11 @@ const Content = () => {
           Comprar 15 $ {(15 * price).toLocaleString()}
         </button>
       </div>
-     <div>
-     {preferenceId && quantity !== "" && (
-        <Wallet initialization={{ preferenceId: preferenceId }} />
-      )}
-     </div>
+      <div>
+        {preferenceId && quantity !== "" && (
+          <Wallet initialization={{ preferenceId: preferenceId }} />
+        )}
+      </div>
       <div className="content-deseas-mas">
         <p>Si deseas adquirir más, por favor escribe la cantidad que deseas</p>
       </div>
@@ -143,7 +144,7 @@ const Content = () => {
         />
 
         <button
-        id="buy-button4"
+          id="buy-button4"
           onClick={() => {
             setQuantity(customQuantity);
             setProductName(` ${quantity} Boletos`);
@@ -152,11 +153,14 @@ const Content = () => {
         >
           Comprar
           {customQuantity
-            ? " " + customQuantity + " " + "$" + (customQuantity * price).toLocaleString()
+            ? " " +
+              customQuantity +
+              " " +
+              "$" +
+              (customQuantity * price).toLocaleString()
             : ""}
         </button>
       </div>
-      
     </div>
   );
 };
