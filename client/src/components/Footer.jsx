@@ -12,7 +12,10 @@ const Footer = () => {
         </ul>
       </div>
       <div className="footer-image">
-        <img src="../../src/assets/SDS_Logo_blanco.png" alt="No image Found" />
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/sds-main-29a46.firebasestorage.app/o/images%2FSDS_Logo_blanco.png?alt=media&token=19b2e59e-da04-40fc-b67e-f9a1c25fb529"
+          alt="No image Found"
+        />
       </div>
     </footer>
   );
