@@ -78,6 +78,20 @@ const Content = () => {
     }, 2500);
   }, [loading]);
 
+  useEffect(() => {
+    // Event listener para detectar cuando el usuario cierra o recarga la página
+    const handleBeforeUnload = () => {
+      localStorage.removeItem("cantidad"); // Borra la cantidad seleccionada en localStorage
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Limpiar el evento al desmontar el componente (para evitar fugas de memoria)
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   return (
     <div className="content">
       {loading ? (
