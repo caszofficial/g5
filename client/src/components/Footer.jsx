@@ -7,7 +7,7 @@ const Footer = () => {
         <ul style={{ listStyle: "none", textAlign: "center" }}>
           <li>SDS</li>
           <li>CR 43A #7-50</li>
-          <li>+573001112233</li>
+          {/* <li>+573001112233</li> */}
           <li>sdsfabricadesuenos@gmail.com</li>
         </ul>
       </div>
