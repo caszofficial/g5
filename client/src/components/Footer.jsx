@@ -11,7 +11,7 @@ const Footer = () => {
           <li>sdsfabricadesuenos@gmail.com</li>
         </ul>
       </div>
-      <div className="whatsapp-button-cont">
+      {/* <div className="whatsapp-button-cont">
         <button className="whatsapp-button">
           <a
             style={{
@@ -25,7 +25,7 @@ const Footer = () => {
             Contáctanos
           </a>
         </button>
-      </div>
+      </div> */}
       <div className="footer-image">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/sds-main-29a46.firebasestorage.app/o/images%2FSDS_Logo_blanco.png?alt=media&token=19b2e59e-da04-40fc-b67e-f9a1c25fb529"
