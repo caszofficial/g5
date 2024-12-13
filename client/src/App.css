@@ -49,6 +49,18 @@
     height: 80px;
   }
 
+  .whatsapp-button {
+    background-color: #008069;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 4px 6px;
+    border: none;
+  }
+
+  .whatsapp-button:hover {
+    background-color: #017561;
+  }
+
   .footer-list {
     flex: 1;
   }
@@ -401,6 +413,24 @@
     align-items: center;
     gap: 20px;
     padding: 20px 0;
+  }
+
+  .whatsapp-button-cont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .whatsapp-button {
+    background-color: #008069;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 4px 6px;
+    border: none;
+  }
+
+  .whatsapp-button:hover {
+    background-color: #017561;
   }
 
   .footer-image {
