@@ -9,12 +9,13 @@ const PaymentFailed = () => {
   useEffect(() => {
     setTimeout(() => {
       navigate("/payment_confirmed");
-    }, 60000);
+    }, 30000);
   }, []);
   return (
     <div className="payment-failed-main-container">
       <Header />
       <div className="payment-failed-container">
+      <p>Por favor no salgas ni recargues esta página</p>
         <p>Estamos procesando tu pago</p>
         <p>
           Después de que procesemos tu pago serás redirigido automaticamente
