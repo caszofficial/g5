@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { useNavigate } from "react-router-dom";
 
-const PaymentFailed = () => {
+const PaymentPending = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,4 +29,4 @@ const PaymentFailed = () => {
   );
 };
 
-export default PaymentFailed;
+export default PaymentPending;
