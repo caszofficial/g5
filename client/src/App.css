@@ -5,6 +5,15 @@
 }
 
 @media (width > 600px) {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   .page {
     display: grid;
     min-height: 100dvh;
@@ -60,6 +69,7 @@
     flex-direction: column;
     text-align: center;
     padding: 20px 0px 50px 0px;
+    height: 100%;
   }
   .content-title {
     margin-bottom: 10px;
@@ -69,6 +79,7 @@
     width: 100%;
     display: flex;
     margin: 30px 0px;
+    animation: fadeIn 2s ease-in-out forwards;
 
     > div {
       width: 50vw;
@@ -101,6 +112,11 @@
     font-weight: bold;
     font-size: 20px;
     margin-top: 30px;
+  }
+
+  #loaded-content {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
   }
 
   .buy-buttons {
@@ -342,6 +358,21 @@
 }
 
 @media (width <= 600px) {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .page {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+    background-color: #f7f8f9;
+  }
+
   .header {
     background-color: #071938;
     padding: 20px 0px;
@@ -390,12 +421,19 @@
     box-shadow: 1px 1px 30px #c9c9c9;
     padding: 20px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .content-image-container {
     height: 250px;
     width: 90%;
     margin: auto;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 3s ease-in-out forwards;
   }
 
   .content-image {
@@ -432,6 +470,11 @@
       font-size: 16px;
       font-weight: bold;
     }
+  }
+
+  #loaded-content {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
   }
 
   .buy-buttons {
@@ -531,6 +574,8 @@
   .datafill-img {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 20px auto;
 
     > div {
       width: 80%;
