@@ -119,7 +119,7 @@ const Content = () => {
           </div>
           <div className="content-percentage">
             <p>Hemos vendido</p>
-            <Progress.Line percent={porcentaje} strokeColor="#ffd700" />
+            <Progress.Line percent={5 + porcentaje} strokeColor="#ffd700" />
             <p>No te quedes sin participar</p>
           </div>
           <div className="content-valor">
@@ -130,31 +130,31 @@ const Content = () => {
             <button
               id="buy-button1"
               onClick={() => {
-                setQuantity(5);
+                setQuantity(1);
                 setProductName("Un Boleto");
               }}
             >
-              Comprar 5 ${(5 * price).toLocaleString()}
+              Comprar 1 ${(1 * price).toLocaleString()}
             </button>
             <br />
             <button
               id="buy-button2"
               onClick={() => {
-                setQuantity(10);
+                setQuantity(3);
                 setProductName("Dos Boletos");
               }}
             >
-              Comprar 10 ${(10 * price).toLocaleString()}
+              Comprar 3 ${(3 * price).toLocaleString()}
             </button>
             <br />
             <button
               id="buy-button3"
               onClick={() => {
-                setQuantity(15);
+                setQuantity(5);
                 setProductName("Cinco Boletos");
               }}
             >
-              Comprar 15 $ {(15 * price).toLocaleString()}
+              Comprar 5 $ {(5 * price).toLocaleString()}
             </button>
           </div>
           <div>
