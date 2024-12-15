@@ -280,11 +280,18 @@
       border: none;
       transition: background-color 250ms ease-in;
       font-weight: bold;
+      
     }
     > button:hover {
       background-color: #ffd700;
       color: #071938;
       font-weight: bold;
+      cursor: pointer;
+    }
+    > button:disabled {
+       background-color: lightgray;
+       color: gray;
+       cursor: default;
     }
     > p {
       font-size: 20px;
@@ -648,6 +655,10 @@
       border-radius: 10px;
       border: none;
     }
+    > button:disabled {
+      background-color: lightgray;
+      color: gray;
+   }
   }
 
   .datafill-img-pc {

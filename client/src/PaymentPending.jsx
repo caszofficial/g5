@@ -9,7 +9,7 @@ const PaymentPending = () => {
   useEffect(() => {
     setTimeout(() => {
       navigate("/payment_confirmed");
-    }, 30000);
+    }, 15000);
   }, []);
   return (
     <div className="payment-failed-main-container">

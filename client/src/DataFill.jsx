@@ -14,13 +14,16 @@ const DataFill = () => {
   const cantidad = localStorage.getItem("cantidad");
 
   const [showNumbers, setShowNumbers] = useState(false);
+  const [disabled, setDisabled] = useState(false)
 
   // Configura la función para hacer la llamada al backend
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowNumbers(false); // Oculta los números anteriores al hacer una nueva solicitud
 
     try {
+      setDisabled(true)
       // Llama a la API para generar los números
       const response = await axios.post(
         import.meta.env.VITE_ENV === "prod"
@@ -34,7 +37,6 @@ const DataFill = () => {
           cantidad: parseInt(cantidad),
         }
       );
-
       console.log(response);
 
       if (response.data.success) {
@@ -74,7 +76,7 @@ const DataFill = () => {
           }
         );
     } else {
-      console.log("hola");
+      console.log("error")
     }
   }, [numerosRecientes]);
 
@@ -125,14 +127,8 @@ const DataFill = () => {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Direccion"
             />
-            <button type="submit">Generar números</button>
+            <button type="submit" disabled={disabled}>Generar números</button>
           </form>
-          {/* <div className="datafill-img-pc">
-            <img
-              src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_2e3dce5a6a514052a8f3236f33acfe1c.jpg"
-              alt=""
-            />
-          </div> */}
         </div>
       ) : (
         <div className="datafill-shownumbers">
