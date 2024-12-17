@@ -14,7 +14,10 @@ const Content = () => {
   const [porcentaje, setPorcentaje] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const promo = true;
+
   const price = 8000;
+  const discountedPrice = 4000;
 
   const handleBuyTicket = async () => {
     try {
@@ -35,7 +38,7 @@ const Content = () => {
         {
           title: productName,
           quantity: quantity,
-          price: price,
+          price: promo ? discountedPrice : price,
         }
       );
       const { id } = response.data;
@@ -147,15 +150,28 @@ const Content = () => {
               Comprar 3 ${(3 * price).toLocaleString()}
             </button>
             <br />
-            <button
-              id="buy-button3"
-              onClick={() => {
-                setQuantity(5);
-                setProductName("Cinco Boletos");
-              }}
-            >
-              Comprar 5 $ {(5 * price).toLocaleString()}
-            </button>
+            {promo ? (
+              <button
+                className="buyButtonPromo"
+                id="buy-buttonPromo"
+                onClick={() => {
+                  setQuantity(5);
+                  setProductName("Cinco Boletos");
+                }}
+              >
+                Comprar 5 $ {(5 * discountedPrice).toLocaleString()}
+              </button>
+            ) : (
+              <button
+                id="buy-button3"
+                onClick={() => {
+                  setQuantity(5);
+                  setProductName("Cinco Boletos");
+                }}
+              >
+                Comprar 5 $ {(5 * price).toLocaleString()}
+              </button>
+            )}
           </div>
           <div>
             {preferenceId && quantity !== "" && (
