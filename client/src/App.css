@@ -149,6 +149,10 @@
       font-size: 20px;
       transition: background-color 250ms ease-in-out;
     }
+    .buyButtonPromo {
+      background: linear-gradient(to right, #feaa2b, #ffd700);
+      color: #071938;
+    }
   }
 
   #buy-button1:hover {
@@ -170,6 +174,11 @@
     background-color: #ffd700;
     font-weight: bold;
     color: #071938;
+  }
+  #buy-buttonPromo:hover {
+    background: linear-gradient(to right, #071938, #043968);
+    font-weight: bold;
+    color: #ffd700;
   }
 
   .buy-buttons-2 {
@@ -280,7 +289,6 @@
       border: none;
       transition: background-color 250ms ease-in;
       font-weight: bold;
-      
     }
     > button:hover {
       background-color: #ffd700;
@@ -289,9 +297,9 @@
       cursor: pointer;
     }
     > button:disabled {
-       background-color: lightgray;
-       color: gray;
-       cursor: default;
+      background-color: lightgray;
+      color: gray;
+      cursor: default;
     }
     > p {
       font-size: 20px;
@@ -530,6 +538,10 @@
       font-weight: bold;
       font-size: 16px;
     }
+    .buyButtonPromo {
+      background: linear-gradient(to right, #feaa2b, #ffd700);
+      color: #071938;
+    }
   }
   #buy-button1:active {
     background-color: #ffd700;
@@ -550,6 +562,11 @@
     background-color: #ffd700;
     font-weight: bold;
     color: #071938;
+  }
+  #buy-buttonPromo:active {
+    background: linear-gradient(to right, #071938, #043968);
+    font-weight: bold;
+    color: #ffd700;
   }
   .buy-buttons-2 {
     display: block;
@@ -658,7 +675,7 @@
     > button:disabled {
       background-color: lightgray;
       color: gray;
-   }
+    }
   }
 
   .datafill-img-pc {
